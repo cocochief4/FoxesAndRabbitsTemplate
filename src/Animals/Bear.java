@@ -12,20 +12,20 @@ import java.util.List;
  * 
  * @author David J. Barnes and Michael Kolling.  Modified by David Dobervich 2007-2022
  */
-public class Fox {
+public class Bear {
 	// ----------------------------------------------------
 	// Characteristics shared by all foxes (static fields).
 	// ----------------------------------------------------
 	private static int BREEDING_AGE = 10;
 	// The age to which a fox can live.
-	private static int MAX_AGE = 50;
+	private static int MAX_AGE = 100;
 	// The likelihood of a fox breeding.
-	private static double BREEDING_PROBABILITY = 0.25;
+	private static double BREEDING_PROBABILITY = 0.15;
 	// The maximum number of births.
-	private static int MAX_LITTER_SIZE = 5;
+	private static int MAX_LITTER_SIZE = 1;
 	// The food value of a single rabbit. In effect, this is the
 	// number of steps a fox can go before it has to eat again.
-	private static int RABBIT_FOOD_VALUE = 10;
+	private static int FOX_FOOD_VALUE = 70;
 	// A shared random number generator to control breeding.
 
 	// -----------------------------------------------------
@@ -47,15 +47,15 @@ public class Fox {
 	 * @param startWithRandomAge
 	 *            If true, the fox will have random age and hunger level.
 	 */
-	public Fox(boolean startWithRandomAge) {
+	public Bear(boolean startWithRandomAge) {
 		age = 0;
 		alive = true;
 		if (startWithRandomAge) {
 			age = (int)(Math.random()*MAX_AGE);
-			foodLevel = (int)(Math.random()*RABBIT_FOOD_VALUE);
+			foodLevel = (int)(Math.random()*FOX_FOOD_VALUE);
 		} else {
 			// leave age at 0
-			foodLevel = RABBIT_FOOD_VALUE;
+			foodLevel = FOX_FOOD_VALUE;
 		}
 	}
 
@@ -70,19 +70,19 @@ public class Fox {
 	 * @param babyFoxStorage
 	 *            A list to add newly born foxes to.
 	 */
-	public void hunt(Field currentField, Field updatedField, List<Fox> babyFoxStorage) {
+	public void hunt(Field currentField, Field updatedField, List<Bear> babyBearStorage) {
 		incrementAge();
 		incrementHunger();
 		if (alive) {
 			// New foxes are born into adjacent locations.
 			int births = breed();
 			for (int b = 0; b < births; b++) {
-				Fox newFox = new Fox(false);
-				newFox.setFoodLevel(this.foodLevel);
-				babyFoxStorage.add(newFox);
+				Bear newBear = new Bear(false);
+				newBear.setFoodLevel(this.foodLevel);
+				babyBearStorage.add(newBear);
 				Location loc = updatedField.randomAdjacentLocation(location);
-				newFox.setLocation(loc);
-				updatedField.put(newFox, loc);
+				newBear.setLocation(loc);
+				updatedField.put(newBear, loc);
 			}
 			// Move towards the source of food if found.
 			Location newLocation = findFood(currentField, location);
@@ -135,11 +135,11 @@ public class Fox {
 
 		for (Location where : adjacentLocations) {
 			Object animal = field.getObjectAt(where);
-			if (animal instanceof Rabbit) {
-				Rabbit rabbit = (Rabbit) animal;
-				if (rabbit.isAlive()) {
-					rabbit.setEaten();
-					foodLevel = RABBIT_FOOD_VALUE;
+			if (animal instanceof Fox) {
+				Fox fox = (Fox) animal;
+				if (fox.isAlive()) {
+					fox.setEaten();
+					foodLevel = FOX_FOOD_VALUE;
 					return where;
 				}
 			}
@@ -201,9 +201,5 @@ public class Fox {
 
 	public void setFoodLevel(int fl) {
 		this.foodLevel = fl;
-	}
-
-	public void setEaten() {
-		alive = false;
 	}
 }

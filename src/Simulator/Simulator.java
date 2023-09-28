@@ -32,10 +32,13 @@ public class Simulator {
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
+    private static final double BEAR_CREATION_PROBABILITY = 0.0016;
+
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.
     private ArrayList<Rabbit> rabbitList;
     private ArrayList<Fox> foxList;
+    private ArrayList<Bear> bearList;
 
     // The current state of the field.
     private Field field;
@@ -81,6 +84,7 @@ public class Simulator {
 
         rabbitList = new ArrayList<Rabbit>();
         foxList = new ArrayList<Fox>();
+        bearList = new ArrayList<Bear>();
         field = new Field(width, height);
         updatedField = new Field(width, height);
         stats = new FieldStats();
@@ -96,6 +100,7 @@ public class Simulator {
         view = new FieldDisplay(p, this.field, VIEW_EDGE_BUFFER, VIEW_EDGE_BUFFER, p.width - 2*VIEW_EDGE_BUFFER, p.height / 2 - 2 * VIEW_EDGE_BUFFER);
         view.setColor(Rabbit.class, p.color(155, 155, 155));
         view.setColor(Fox.class, p.color(200, 0, 255));
+        view.setColor(Bear.class, p.color(255, 0, 0));
 
         graph = new Graph(p, view.getLeftEdge(), view.getBottomEdge()+VIEW_EDGE_BUFFER, view.getRightEdge(), p.height-VIEW_EDGE_BUFFER, 0,
                 0, 500, field.getHeight() * field.getWidth());
@@ -105,6 +110,7 @@ public class Simulator {
         graph.ylabel = "Pop.\t\t";
         graph.setColor(Rabbit.class, p.color(155, 155, 155));
         graph.setColor(Fox.class, p.color(200, 0, 255));
+        graph.setColor(Bear.class, p.color(255, 0, 0));
     }
 
     /**
@@ -166,6 +172,21 @@ public class Simulator {
         // Add new born foxList to the main list of foxList.
         foxList.addAll(babyFoxStorage);
 
+        ArrayList<Bear> babyBearStorage = new ArrayList<Bear>();
+
+        // Loop through Bears; let each run around.
+        for (int i = 0; i < bearList.size(); i++) {
+            Bear bear = bearList.get(i);
+            bear.hunt(field, updatedField, babyBearStorage);
+            if (!bear.isAlive()) {
+                bearList.remove(i);
+                i--;
+            }
+        }
+
+        // Add new born foxList to the main list of foxList.
+        bearList.addAll(babyBearStorage);
+
         // Swap the field and updatedField at the end of the step.
         Field temp = field;
         field = updatedField;
@@ -190,6 +211,7 @@ public class Simulator {
         step = 0;
         rabbitList.clear();
         foxList.clear();
+        bearList.clear();
         field.clear();
         updatedField.clear();
         initializeBoard(field);
@@ -213,6 +235,12 @@ public class Simulator {
         field.clear();
         for (int row = 0; row < field.getHeight(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
+                if (rand.nextDouble() <= BEAR_CREATION_PROBABILITY) {
+                    Bear bear = new Bear(true);
+                    bear.setLocation(row, col);
+                    bearList.add(bear);
+                    field.put(bear, row, col);
+                }
                 if (rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Fox fox = new Fox(true);
                     fox.setLocation(row, col);
@@ -228,6 +256,7 @@ public class Simulator {
         }
         Collections.shuffle(rabbitList);
         Collections.shuffle(foxList);
+        Collections.shuffle(bearList);
     }
 
     /**
@@ -272,6 +301,8 @@ public class Simulator {
                         rabbitList.remove((Rabbit) animal);
                     if (animal instanceof Fox)
                         foxList.remove((Fox) animal);
+                    if (animal instanceof Bear)
+                        bearList.remove((Bear) animal);
                     field.put(null, locToCheck);
                     updatedField.put(null, locToCheck);
                 }
