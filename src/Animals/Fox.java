@@ -16,16 +16,16 @@ public class Fox {
 	// ----------------------------------------------------
 	// Characteristics shared by all foxes (static fields).
 	// ----------------------------------------------------
-	private static int BREEDING_AGE = 10;
+	private static int BREEDING_AGE = 5;
 	// The age to which a fox can live.
 	private static int MAX_AGE = 50;
 	// The likelihood of a fox breeding.
-	private static double BREEDING_PROBABILITY = 0.25;
+	private static double BREEDING_PROBABILITY = 0.1;
 	// The maximum number of births.
-	private static int MAX_LITTER_SIZE = 5;
+	private static int MAX_LITTER_SIZE = 1;
 	// The food value of a single rabbit. In effect, this is the
 	// number of steps a fox can go before it has to eat again.
-	private static int RABBIT_FOOD_VALUE = 10;
+	private static int RABBIT_FOOD_VALUE = 25;
 	// A shared random number generator to control breeding.
 
 	// -----------------------------------------------------
@@ -85,17 +85,19 @@ public class Fox {
 				updatedField.put(newFox, loc);
 			}
 			// Move towards the source of food if found.
-			Location newLocation = findFood(currentField, location);
-			if (newLocation == null) { // no food found - move randomly
-				newLocation = updatedField.freeAdjacentLocation(location);
-			}
-			if (newLocation != null) {
-				setLocation(newLocation);
-				updatedField.put(this, newLocation);
-			} else {
-				// can neither move nor stay - overcrowding - all locations
-				// taken
-				alive = false;
+			if (MAX_AGE * 0.7 > foodLevel) {
+				Location newLocation = findFood(currentField, location);
+				if (newLocation == null) { // no food found - move randomly
+					newLocation = updatedField.freeAdjacentLocation(location);
+				}
+				if (newLocation != null) {
+					setLocation(newLocation);
+					updatedField.put(this, newLocation);
+				} else {
+					// can neither move nor stay - overcrowding - all locations
+					// taken
+					alive = false;
+				}
 			}
 		}
 	}
