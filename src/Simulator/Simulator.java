@@ -27,12 +27,12 @@ public class Simulator {
     private static final int VIEW_EDGE_BUFFER = 20;
 
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.01;
+    private static final double FOX_CREATION_PROBABILITY = 0.1;
 
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.1;
 
-    private static final double BEAR_CREATION_PROBABILITY = 0.01;
+    private static final double BEAR_CREATION_PROBABILITY = 0.1;
 
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.
