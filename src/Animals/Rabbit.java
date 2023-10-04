@@ -14,11 +14,6 @@ import java.util.List;
  */
 public class Rabbit extends Animal{
 
-    // -----------------------------------------------------
-    // Individual characteristics (attributes).
-    // -----------------------------------------------------
-    // The rabbi
-
     /**
      * Create a new rabbit. A rabbit may be created with age
      * zero (a new born) or with a random age.
@@ -28,11 +23,11 @@ public class Rabbit extends Animal{
     public Rabbit(boolean startWithRandomAge)
     {
         super();
-        Rabbit.MAX_AGE = 5;
         Rabbit.BREEDING_AGE = 1;
-        Rabbit.BREEDING_PROBABILITY = 0.1;
+        Rabbit.MAX_AGE = 5;
+        Rabbit.BREEDING_PROBABILITY = 0.13; //0.15
         Rabbit.MAX_LITTER_SIZE = 5;
-        Animal(startWithRandomAge);
+        startWithRandomAge(startWithRandomAge);
     }
     
     /**
@@ -66,16 +61,9 @@ public class Rabbit extends Animal{
         }
     }
     
+    
+
     /**
-     * Increase the age.
-     * This could result in the rabbit's death.
-     */
-    
-    
-    
-    /**
-     * A r
-     * Chec
      * Tell the rabbit that it's dead now :(
      */
     public void setEaten()

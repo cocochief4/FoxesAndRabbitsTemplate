@@ -13,13 +13,15 @@ import java.util.List;
  * @author David J. Barnes and Michael Kolling.  Modified by David Dobervich 2007-2022
  */
 public class Fox extends Animal{
+	// ----------------------------------------------------
+	// Characteristics shared by all foxes (static fields).
+	// ----------------------------------------------------
 	// The food value of a single rabbit. In effect, this is the
 	// number of steps a fox can go before it has to eat again.
-	private static int RABBIT_FOOD_VALUE = 25;
-
-	private int foodLevel;
+	private static int RABBIT_FOOD_VALUE = 10;
 	// A shared random number generator to control breeding.
-
+	// The fox's food level, which is increased by eating rabbits.
+	private int foodLevel;
 
 	/**
 	 * Create a fox. A fox can be created as a new born (age zero and not
@@ -30,11 +32,14 @@ public class Fox extends Animal{
 	 */
 	public Fox(boolean startWithRandomAge) {
 		super();
+		Fox.BREEDING_AGE = 1;
+		// The age to which a fox can live.
 		Fox.MAX_AGE = 50;
-		Fox.MAX_LITTER_SIZE = 2;
-		Fox.BREEDING_AGE = 5;
-		Fox.BREEDING_PROBABILITY = 0.1;
-		Animal(startWithRandomAge);
+		// The likelihood of a fox breeding.
+		Fox.BREEDING_PROBABILITY = 0.15;
+		// The maximum number of births.
+		Fox.MAX_LITTER_SIZE = 3;
+		startWithRandomAge(startWithRandomAge);
 		if (startWithRandomAge) {
 			foodLevel = (int)(Math.random()*RABBIT_FOOD_VALUE);
 		} else {
@@ -69,19 +74,17 @@ public class Fox extends Animal{
 				updatedField.put(newFox, loc);
 			}
 			// Move towards the source of food if found.
-			if (MAX_AGE * 0.7 > foodLevel) {
-				Location newLocation = findFood(currentField, location);
-				if (newLocation == null) { // no food found - move randomly
-					newLocation = updatedField.freeAdjacentLocation(location);
-				}
-				if (newLocation != null) {
-					setLocation(newLocation);
-					updatedField.put(this, newLocation);
-				} else {
-					// can neither move nor stay - overcrowding - all locations
-					// taken
-					alive = false;
-				}
+			Location newLocation = findFood(currentField, location);
+			if (newLocation == null) { // no food found - move randomly
+				newLocation = updatedField.freeAdjacentLocation(location);
+			}
+			if (newLocation != null) {
+				setLocation(newLocation);
+				updatedField.put(this, newLocation);
+			} else {
+				// can neither move nor stay - overcrowding - all locations
+				// taken
+				alive = false;
 			}
 		}
 	}
@@ -123,14 +126,8 @@ public class Fox extends Animal{
 
 		return null;
 	}
-	/**
-	 * A fox 
 
-	/**
-
-	/**
-	 * Set the animal's location.
-	 */
+	
 
 	public void setFoodLevel(int fl) {
 		this.foodLevel = fl;

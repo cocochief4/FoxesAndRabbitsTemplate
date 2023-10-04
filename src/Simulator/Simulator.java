@@ -18,21 +18,21 @@ import processing.core.PApplet;
  */
 public class Simulator {
     // The default width for the grid.
-    private static final int DEFAULT_WIDTH = 100;
+    private static final int DEFAULT_WIDTH = 80;
 
     // The default height of the grid.
-    private static final int DEFAULT_HEIGHT = 100;
+    private static final int DEFAULT_HEIGHT = 80;
 
     // How many pixels to leave as a buffer between rendered elements
     private static final int VIEW_EDGE_BUFFER = 20;
 
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.1;
+    private static final double FOX_CREATION_PROBABILITY = 0.02;
 
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.1;
+    private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
-    private static final double BEAR_CREATION_PROBABILITY = 0.1;
+    private static final double BEAR_CREATION_PROBABILITY = 0.016;
 
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.

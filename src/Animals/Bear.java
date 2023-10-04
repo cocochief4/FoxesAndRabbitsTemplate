@@ -12,14 +12,14 @@ import java.util.List;
  * 
  * @author David J. Barnes and Michael Kolling.  Modified by David Dobervich 2007-2022
  */
-public class Bear extends Animal{
+public class Bear extends Animal {
 	// ----------------------------------------------------
 	// Characteristics shared by all foxes (static fields).
 	// ----------------------------------------------------
 	
 	// The food value of a single rabbit. In effect, this is the
 	// number of steps a fox can go before it has to eat again.
-	private static int FOX_FOOD_VALUE = 50;
+	private static int FOX_FOOD_VALUE = 500;
 	// A shared random number generator to control breeding.
 
 	// -----------------------------------------------------
@@ -36,15 +36,20 @@ public class Bear extends Animal{
 	 *            If true, the fox will have random age and hunger level.
 	 */
 	public Bear(boolean startWithRandomAge) {
-		super();
-		Bear.MAX_AGE = 100;
-		Bear.BREEDING_AGE = 10;
-		Bear.BREEDING_PROBABILITY = 0.1;
-		Bear.MAX_LITTER_SIZE = 1;
-		Animal(startWithRandomAge);
+		age = 0;
+		alive = true;
+		Bear.BREEDING_AGE = 1;
+		// The age to which a fox can live.
+		Bear.MAX_AGE = 500;
+		// The likelihood of a fox breeding.
+		Bear.BREEDING_PROBABILITY = 0.15;
+		// The maximum number of births.
+		Bear.MAX_LITTER_SIZE = 2;
 		if (startWithRandomAge) {
+			age = (int)(Math.random()*MAX_AGE);
 			foodLevel = (int)(Math.random()*FOX_FOOD_VALUE);
 		} else {
+			// leave age at 0
 			foodLevel = FOX_FOOD_VALUE;
 		}
 	}
@@ -127,6 +132,7 @@ public class Bear extends Animal{
 
 		return null;
 	}
+
 
 	public void setFoodLevel(int fl) {
 		this.foodLevel = fl;
