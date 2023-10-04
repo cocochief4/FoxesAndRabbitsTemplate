@@ -32,7 +32,7 @@ public class Simulator {
     // The probability that a rabbit will be created in any given grid position.
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
-    private static final double BEAR_CREATION_PROBABILITY = 0.0016;
+    private static final double BEAR_CREATION_PROBABILITY = 0.016;
 
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.
