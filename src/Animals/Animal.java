@@ -1,5 +1,8 @@
 package Animals;
 
+import java.util.ArrayList;
+
+import Field.Field;
 import Field.Location;
 
 public class Animal {
@@ -110,5 +113,8 @@ public class Animal {
     public void setLocation(Location location)
     {
         this.location = location;
+    }
+
+    public void act(Field updatedField, Field updatedField2, ArrayList<Animal> babyAnimalStorage) {
     }
 }   

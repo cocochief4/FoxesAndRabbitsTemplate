@@ -5,6 +5,7 @@ import Field.*;
 import Graph.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A simple model of a rabbit.
@@ -24,8 +25,8 @@ public class Rabbit extends Animal{
     {
         super();
         Rabbit.BREEDING_AGE = 1;
-        Rabbit.MAX_AGE = 5;
-        Rabbit.BREEDING_PROBABILITY = 0.13; //0.15
+        Rabbit.MAX_AGE = 10;
+        Rabbit.BREEDING_PROBABILITY = 0.15; //0.15
         Rabbit.MAX_LITTER_SIZE = 5;
         startWithRandomAge(startWithRandomAge);
     }
@@ -36,7 +37,8 @@ public class Rabbit extends Animal{
      * @param updatedField The field to transfer to.
      * @param babyRabbitStorage A list to add newly born rabbits to.
      */
-    public void run(Field updatedField, List<Rabbit> babyRabbitStorage)
+    @Override
+    public void act(Field currentField, Field updatedField, ArrayList<Animal> babyRabbitStorage)
     {
         incrementAge();
         if(alive) {

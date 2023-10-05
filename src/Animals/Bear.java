@@ -6,6 +6,7 @@ import Graph.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A simple model of a fox. Foxes age, move, eat rabbits, and die.
@@ -65,7 +66,7 @@ public class Bear extends Animal {
 	 * @param babyFoxStorage
 	 *            A list to add newly born foxes to.
 	 */
-	public void hunt(Field currentField, Field updatedField, List<Bear> babyBearStorage) {
+	public void act(Field currentField, Field updatedField, ArrayList<Animal> babyBearStorage) {
 		incrementAge();
 		incrementHunger();
 		if (alive) {

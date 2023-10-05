@@ -6,6 +6,7 @@ import Graph.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * A simple model of a fox. Foxes age, move, eat rabbits, and die.
@@ -34,11 +35,11 @@ public class Fox extends Animal{
 		super();
 		Fox.BREEDING_AGE = 1;
 		// The age to which a fox can live.
-		Fox.MAX_AGE = 50;
+		Fox.MAX_AGE = 10;
 		// The likelihood of a fox breeding.
-		Fox.BREEDING_PROBABILITY = 0.15;
+		Fox.BREEDING_PROBABILITY = 0.1;
 		// The maximum number of births.
-		Fox.MAX_LITTER_SIZE = 3;
+		Fox.MAX_LITTER_SIZE = 1;
 		startWithRandomAge(startWithRandomAge);
 		if (startWithRandomAge) {
 			foodLevel = (int)(Math.random()*RABBIT_FOOD_VALUE);
@@ -59,7 +60,8 @@ public class Fox extends Animal{
 	 * @param babyFoxStorage
 	 *            A list to add newly born foxes to.
 	 */
-	public void hunt(Field currentField, Field updatedField, List<Fox> babyFoxStorage) {
+	@Override
+	public void act(Field currentField, Field updatedField, ArrayList<Animal> babyAnimalStorage) {
 		incrementAge();
 		incrementHunger();
 		if (alive) {
@@ -68,7 +70,7 @@ public class Fox extends Animal{
 			for (int b = 0; b < births; b++) {
 				Fox newFox = new Fox(false);
 				newFox.setFoodLevel(this.foodLevel);
-				babyFoxStorage.add(newFox);
+				babyAnimalStorage.add(newFox);
 				Location loc = updatedField.randomAdjacentLocation(location);
 				newFox.setLocation(loc);
 				updatedField.put(newFox, loc);
