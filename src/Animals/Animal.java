@@ -9,13 +9,13 @@ public class Animal {
     // ----------------------------------------------------
 	// Characteristics shared by all animals (static fields).
 	// ----------------------------------------------------
-	protected static int BREEDING_AGE;
+	protected int BREEDING_AGE;
 	// The age to which an animal can live.
-	protected static int MAX_AGE;
+	protected int MAX_AGE;
 	// The likelihood of an animal breeding.
-	protected static double BREEDING_PROBABILITY;
+	protected double BREEDING_PROBABILITY;
 	// The maximum number of births.
-	protected static int MAX_LITTER_SIZE;
+	protected int MAX_LITTER_SIZE;
 
     // -----------------------------------------------------
     // Individual characteristics (attributes).

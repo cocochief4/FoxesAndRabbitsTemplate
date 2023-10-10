@@ -34,6 +34,8 @@ public class Simulator {
 
     private static final double BEAR_CREATION_PROBABILITY = 0.016;
 
+    private static final double RITVIK_CREATION_PROBABILITY = 0;
+
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.
     private ArrayList<Animal> animalList;
@@ -97,6 +99,7 @@ public class Simulator {
         view.setColor(Rabbit.class, p.color(155, 155, 155));
         view.setColor(Fox.class, p.color(200, 0, 255));
         view.setColor(Bear.class, p.color(255, 0, 0));
+        view.setColor(Ritvik.class, p.color(255, 125, 0));
 
         graph = new Graph(p, view.getLeftEdge(), view.getBottomEdge()+VIEW_EDGE_BUFFER, view.getRightEdge(), p.height-VIEW_EDGE_BUFFER, 0,
                 0, 500, field.getHeight() * field.getWidth());
@@ -107,6 +110,7 @@ public class Simulator {
         graph.setColor(Rabbit.class, p.color(155, 155, 155));
         graph.setColor(Fox.class, p.color(200, 0, 255));
         graph.setColor(Bear.class, p.color(255, 0, 0));
+        graph.setColor(Ritvik.class, p.color(255, 125, 0));
     }
 
     /**
@@ -196,6 +200,10 @@ public class Simulator {
     private void initializeBoard(Field field) {
         Random rand = new Random();
         field.clear();
+        Ritvik ritvik = new Ritvik(true);
+        ritvik.setLocation(DEFAULT_HEIGHT/2, DEFAULT_WIDTH/2);
+        animalList.add(ritvik);
+        field.put(ritvik, DEFAULT_HEIGHT/2, DEFAULT_WIDTH/2);
         for (int row = 0; row < field.getHeight(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 if (rand.nextDouble() <= BEAR_CREATION_PROBABILITY) {

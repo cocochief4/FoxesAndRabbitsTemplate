@@ -13,14 +13,19 @@ import java.util.ArrayList;
  * 
  * @author David J. Barnes and Michael Kolling.  Modified by David Dobervich 2007-2022
  */
-public class Fox extends Animal{
+public class Ritvik extends Animal {
 	// ----------------------------------------------------
 	// Characteristics shared by all foxes (static fields).
 	// ----------------------------------------------------
+	
 	// The food value of a single rabbit. In effect, this is the
 	// number of steps a fox can go before it has to eat again.
-	private static int RABBIT_FOOD_VALUE = 10;
+	private static int BEAR_FOOD_VALUE = 500;
 	// A shared random number generator to control breeding.
+
+	// -----------------------------------------------------
+	// Individual characteristics (attributes).
+	// -----------------------------------------------------
 	// The fox's food level, which is increased by eating rabbits.
 	private int foodLevel;
 
@@ -31,21 +36,22 @@ public class Fox extends Animal{
 	 * @param startWithRandomAge
 	 *            If true, the fox will have random age and hunger level.
 	 */
-	public Fox(boolean startWithRandomAge) {
-		super();
-		BREEDING_AGE = 3;
+	public Ritvik(boolean startWithRandomAge) {
+		age = 0;
+		alive = true;
+		BREEDING_AGE = 410;
 		// The age to which a fox can live.
-		MAX_AGE = 10;
+		MAX_AGE = 500;
 		// The likelihood of a fox breeding.
-		BREEDING_PROBABILITY = 0.10;
+		BREEDING_PROBABILITY = 0.1;
 		// The maximum number of births.
-		MAX_LITTER_SIZE = 2;
-		startWithRandomAge(startWithRandomAge);
+		MAX_LITTER_SIZE = 1;
 		if (startWithRandomAge) {
-			foodLevel = (int)(Math.random()*RABBIT_FOOD_VALUE);
+			age = (int)(Math.random()*MAX_AGE);
+			foodLevel = (int)(Math.random()*BEAR_FOOD_VALUE);
 		} else {
 			// leave age at 0
-			foodLevel = RABBIT_FOOD_VALUE;
+			foodLevel = BEAR_FOOD_VALUE;
 		}
 	}
 
@@ -60,20 +66,19 @@ public class Fox extends Animal{
 	 * @param babyFoxStorage
 	 *            A list to add newly born foxes to.
 	 */
-	@Override
-	public void act(Field currentField, Field updatedField, ArrayList<Animal> babyAnimalStorage) {
+	public void act(Field currentField, Field updatedField, ArrayList<Animal> babyBearStorage) {
 		incrementAge();
 		incrementHunger();
 		if (alive) {
 			// New foxes are born into adjacent locations.
 			int births = breed();
 			for (int b = 0; b < births; b++) {
-				Fox newFox = new Fox(false);
-				newFox.setFoodLevel(this.foodLevel);
-				babyAnimalStorage.add(newFox);
+				Ritvik newRitvik = new Ritvik(false);
+				newRitvik.setFoodLevel(this.foodLevel);
+				babyBearStorage.add(newRitvik);
 				Location loc = updatedField.randomAdjacentLocation(location);
-				newFox.setLocation(loc);
-				updatedField.put(newFox, loc);
+				newRitvik.setLocation(loc);
+				updatedField.put(newRitvik, loc);
 			}
 			// Move towards the source of food if found.
 			Location newLocation = findFood(currentField, location);
@@ -116,11 +121,11 @@ public class Fox extends Animal{
 
 		for (Location where : adjacentLocations) {
 			Object animal = field.getObjectAt(where);
-			if (animal instanceof Rabbit) {
-				Rabbit rabbit = (Rabbit) animal;
-				if (rabbit.isAlive()) {
-					rabbit.setEaten();
-					foodLevel = RABBIT_FOOD_VALUE;
+			if (animal instanceof Bear) {
+				Bear bear = (Bear) animal;
+				if (bear.isAlive()) {
+					bear.setEaten();
+					foodLevel = BEAR_FOOD_VALUE;
 					return where;
 				}
 			}
@@ -129,13 +134,16 @@ public class Fox extends Animal{
 		return null;
 	}
 
-	
 
 	public void setFoodLevel(int fl) {
 		this.foodLevel = fl;
 	}
 
-	public void setEaten() {
-		alive = false;
-	}
+	/**
+     * Tell the Bear that it's dead now :(
+     */
+    public void setEaten()
+    {
+        alive = false;
+    }
 }
