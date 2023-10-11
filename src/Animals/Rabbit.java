@@ -24,10 +24,10 @@ public class Rabbit extends Animal{
     public Rabbit(boolean startWithRandomAge)
     {
         super();
-        BREEDING_AGE = 3;
-        MAX_AGE = 7;
-        BREEDING_PROBABILITY = 0.15; //0.15
-        MAX_LITTER_SIZE = 3;
+        BREEDING_AGE = 2;
+        MAX_AGE = 10;
+        BREEDING_PROBABILITY = 0.1; //0.15
+        MAX_LITTER_SIZE = 2;
         startWithRandomAge(startWithRandomAge);
     }
     

@@ -33,11 +33,11 @@ public class Fox extends Animal{
 	 */
 	public Fox(boolean startWithRandomAge) {
 		super();
-		BREEDING_AGE = 3;
+		BREEDING_AGE = 1;
 		// The age to which a fox can live.
 		MAX_AGE = 10;
 		// The likelihood of a fox breeding.
-		BREEDING_PROBABILITY = 0.10;
+		BREEDING_PROBABILITY = 0.1;
 		// The maximum number of births.
 		MAX_LITTER_SIZE = 2;
 		startWithRandomAge(startWithRandomAge);

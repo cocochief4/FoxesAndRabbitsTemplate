@@ -27,14 +27,14 @@ public class Simulator {
     private static final int VIEW_EDGE_BUFFER = 20;
 
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static final double FOX_CREATION_PROBABILITY = 0.4;
 
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;
+    private static final double RABBIT_CREATION_PROBABILITY = 0.6;
 
-    private static final double BEAR_CREATION_PROBABILITY = 0.016;
+    private static final double BEAR_CREATION_PROBABILITY = 0.05;
 
-    private static final double RITVIK_CREATION_PROBABILITY = 0;
+    private static final double RITVIK_CREATION_PROBABILITY = 0.5;
 
     // Lists of animals in the field. Separate lists are kept for ease of
     // iteration.
@@ -200,12 +200,15 @@ public class Simulator {
     private void initializeBoard(Field field) {
         Random rand = new Random();
         field.clear();
-        Ritvik ritvik = new Ritvik(true);
-        ritvik.setLocation(DEFAULT_HEIGHT/2, DEFAULT_WIDTH/2);
-        animalList.add(ritvik);
-        field.put(ritvik, DEFAULT_HEIGHT/2, DEFAULT_WIDTH/2);
+
         for (int row = 0; row < field.getHeight(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
+                if (rand.nextDouble() <= RITVIK_CREATION_PROBABILITY) {
+                    Ritvik ritvik = new Ritvik(true);
+                    ritvik.setLocation(row, col);
+                    animalList.add(ritvik);
+                    field.put(ritvik, row, col);
+                }
                 if (rand.nextDouble() <= BEAR_CREATION_PROBABILITY) {
                     Bear bear = new Bear(true);
                     bear.setLocation(row, col);

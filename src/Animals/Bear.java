@@ -39,13 +39,13 @@ public class Bear extends Animal {
 	public Bear(boolean startWithRandomAge) {
 		age = 0;
 		alive = true;
-		BREEDING_AGE = 15;
+		BREEDING_AGE = 2;
 		// The age to which a fox can live.
-		MAX_AGE = 50;
+		MAX_AGE = 10;
 		// The likelihood of a fox breeding.
-		BREEDING_PROBABILITY = 0.03;
+		BREEDING_PROBABILITY = 0.1;
 		// The maximum number of births.
-		MAX_LITTER_SIZE = 1;
+		MAX_LITTER_SIZE = 2;
 		if (startWithRandomAge) {
 			age = (int)(Math.random()*MAX_AGE);
 			foodLevel = (int)(Math.random()*FOX_FOOD_VALUE);
